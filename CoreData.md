@@ -27,11 +27,9 @@
 > #####例如
 > ````
 >     NSManagedObject* obj = [self.fetchController  objectAtIndexPath:path];
-     [self.managedContext deleteObject:obj];
+>     [self.managedContext deleteObject:obj];
      
-> ````
-> 
-> 
+> ```` 
 ### NSFetchedResultsControllerDelegate
 > controllerWillChangeContent: 获取结果的控制器context发生变化，并做出相应的改变
 > 
@@ -43,42 +41,40 @@
 
 
 ### 创建结构控制器
-> ````
-> - (NSFetchedResultsController *)fetchController
-> {
+```
+- (NSFetchedResultsController *)fetchController {
     if (_fetchController != nil) {
         return _fetchController;
     }
     
->    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:self.entityName inManagedObjectContext:self.managedContext];
     [fetchRequest setEntity:entity];
     
->    // Set the batch size to a suitable number.
+    // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     [fetchRequest setPredicate:self.predicate];
     
->    // Edit the sort key as appropriate.
+    // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:self.sortKey ascending:self.ascending];
-    NSArray *sortDescriptors = @[sortDescriptor];
+NSArray *sortDescriptors = @[sortDescriptor];
     
->   [fetchRequest setSortDescriptors:sortDescriptors];
+[fetchRequest setSortDescriptors:sortDescriptors];
     
->    // Edit the section name key path and cache name if appropriate.
+    // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
     _fetchController= [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedContext sectionNameKeyPath:nil cacheName:nil];
     _fetchController.delegate = self;
     
->   NSError *error = nil;
+NSError *error = nil;
     if (![_fetchController performFetch:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         ////LOGMARK(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    
->    return _fetchController;
+  return _fetchController;
 }
 ```
 
